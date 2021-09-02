@@ -1,10 +1,15 @@
-/* Chiedere all'utente di inserire il numero di celle di cui sarà composto il campo da gioco.
-Tramite una funzione javascript disegnare in pagina la griglia con massimo 10 celle per riga.
-Al click su una cella dovrà essere mostrato con un alert il numero della cella e il suo background diventerà rosso. */
-
-// 1. Chiedere all'utente di inserire il numero di celle di cui sarà composto il campo da gioco
-// 2. Tramite una funzione javascript disegnare in pagina la griglia con massimo 10 celle per riga
-// 3. Al click su una cella dovrà essere mostrato con un alert il numero della cella e il suo background diventerà rosso
+/* 
+- Il computer deve generare 16 numeri casuali tra 1 e 100 (bombe).
+- I numeri non possono essere duplicati.
+- In seguito il giocatore clicca sulle celle numerate (non può cliccare più volte sulla stessa cella)
+- La partita termina quando il giocatore clicca su un numero “vietato” o clicca su tutte le celle che non sono delle bombe.
+- Al termine della partita il software deve comunicare il punteggio.
+// BONUS: (da fare solo se funziona tutto il resto)
+all’inizio il software richiede anche una difficoltà all’utente che cambia il range di numeri casuali:
+con difficoltà 0 => tra 1 e 100
+con difficoltà 1 => tra 1 e 80
+con difficoltà 2 => tra 1 e 50
+*/
 
 /*
 DICHIARARE LE FUNZIONI
@@ -44,17 +49,29 @@ function inArray( array, element ) {
 PROGRAMMA
 */
 
-// 1. Chiedere all'utente di inserire il numero di celle di cui sarà composto il campo da gioco
-var NumCelle = parseInt(prompt("Inserisci un numero da 1 a 100"));
-// verifica numero
-while ( NumCelle<1 || NumCelle>100 || isNaN(NumCelle) ) {
+// 1. Chiedere all'utente di inserire la difficoltà (numero di celle di cui sarà composto il campo da gioco)
+var difficoltà = prompt("Inserisci la difficoltà: facile, normale, difficile");
+
+// a. verifica dato inserito dall'utente
+while ( difficoltà != "facile" && difficoltà != "normale" && difficoltà != "difficile" ) {
     alert("Ops.. Riprova");
-    NumCelle = parseInt(prompt("Inserisci un numero da 1 a 100"));
+    difficoltà = prompt("Inserisci la difficoltà: facile, normale, difficile");
+}
+
+// b. Convertire la difficoltà nel numero di celle da cui è composto il campo
+if ( difficoltà == "facile" ) {
+    var NumCelle = 100; 
+} else if (difficoltà == "normale") {
+    var NumCelle = 80;
+} else if ( difficoltà == "difficile" ) {
+    var NumCelle = 50;
 }
 
 // 2. Tramite una funzione javascript disegnare in pagina la griglia con massimo 10 celle per riga
+
 // a. Richiamo funzione
 var Cells = CreateCell(NumCelle);
+
 
 // 3. Al click su una cella dovrà essere mostrato con un alert il numero della cella e il suo background diventerà rosso
 var CELL = document.getElementById("Campo");
