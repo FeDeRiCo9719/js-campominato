@@ -1,15 +1,23 @@
 /* 
-- Il computer deve generare 16 numeri casuali tra 1 e 100 (bombe).
-- I numeri non possono essere duplicati.
+- (bombe) Il computer deve generare 16 numeri casuali tra 1 e NumCelle. => numero.random => array di numeri
+- I numeri non possono essere duplicati. => ciclo.condizione
 - In seguito il giocatore clicca sulle celle numerate (non può cliccare più volte sulla stessa cella)
 - La partita termina quando il giocatore clicca su un numero “vietato” o clicca su tutte le celle che non sono delle bombe.
 - Al termine della partita il software deve comunicare il punteggio.
+
 // BONUS: (da fare solo se funziona tutto il resto)
 all’inizio il software richiede anche una difficoltà all’utente che cambia il range di numeri casuali:
 con difficoltà 0 => tra 1 e 100
 con difficoltà 1 => tra 1 e 80
 con difficoltà 2 => tra 1 e 50
 */
+
+// io ho una lista di numeri esplosivi (bombe) 
+// SE  event.target (numero cliccato dall'utente) corrispode a uno dei numeri esplosivi (bombe)
+// il gioco termina
+
+
+
 
 /*
 DICHIARARE LE FUNZIONI
@@ -67,20 +75,38 @@ if ( difficoltà == "facile" ) {
     var NumCelle = 50;
 }
 
+
 // 2. Tramite una funzione javascript disegnare in pagina la griglia con massimo 10 celle per riga
 
 // a. Richiamo funzione
-var Cells = CreateCell(NumCelle);
+var campo = CreateCell(NumCelle);
+console.log(campo);
+console.log(NumCelle);
+
+
+// Generare le bombe di prova
+var bombe = [4, 7, 20];
 
 
 // 3. Al click su una cella dovrà essere mostrato con un alert il numero della cella e il suo background diventerà rosso
 var CELL = document.getElementById("Campo");
 CELL.addEventListener ("click",
     function(event) {
-        // console.log(event);
         // event.target.classList.toggle("changeColor"); // toggle => aggiunge e toglie la classe "changeColor"
         event.target.classList.add("changeColor");
         // alert(event.target.innerHTML);
+        var Num = event.target.innerHTML;
+
+        // richiamo la funzione per verificare la presenza del target nell'array delle bombe
+        var risultato = inArray( bombe, Num );
+
+        // stampo il risultato della verifica
+        if ( risultato == false ) {
+            alert("SEI SALVO!");
+        } else {
+            alert("HAI PERSO!");
+        }
+        
     }
 );
 
