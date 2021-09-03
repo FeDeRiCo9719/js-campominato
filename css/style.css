@@ -7,15 +7,20 @@
 
 /*---------------------- COMMON ----------------------*/
 body {
+    text-align: center;
     font-family: Arial;
+    background-color: rgb(18, 59, 97);
+    color: white;
+}
+
+.titleBox {
+    margin: 50px; 
 }
 
 .container {
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(148, 102, 102);
 }
 
 #Campo {
@@ -36,5 +41,8 @@ body {
     padding: 5px;
 }
 .changeColor {
-    background-color: coral;
+    background-color: rgb(119, 197, 95);
+}
+.redColor {
+    background-color: rgb(223, 2, 2);
 }

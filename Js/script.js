@@ -1,5 +1,5 @@
 /* 
-- (bombe) Il computer deve generare 16 numeri casuali tra 1 e NumCelle. => numero.random => array di numeri
+- (bombe) Il computer deve generare 16 numeri casuali tra 1 e NumCelle. => numero.random => array di numeri * 16 volte => ciclo definito
 - I numeri non possono essere duplicati. => ciclo.condizione
 - In seguito il giocatore clicca sulle celle numerate (non può cliccare più volte sulla stessa cella)
 - La partita termina quando il giocatore clicca su un numero “vietato” o clicca su tutte le celle che non sono delle bombe.
@@ -12,7 +12,7 @@ con difficoltà 1 => tra 1 e 80
 con difficoltà 2 => tra 1 e 50
 */
 
-// io ho una lista di numeri esplosivi (bombe) 
+// ho una lista di numeri esplosivi (bombe) 
 // SE  event.target (numero cliccato dall'utente) corrispode a uno dei numeri esplosivi (bombe)
 // il gioco termina
 
@@ -58,7 +58,7 @@ PROGRAMMA
 */
 
 // 1. Chiedere all'utente di inserire la difficoltà (numero di celle di cui sarà composto il campo da gioco)
-var difficoltà = prompt("Inserisci la difficoltà: facile, normale, difficile");
+var difficoltà = prompt("Inserisci la difficoltà: facile, normale o difficile");
 
 // a. verifica dato inserito dall'utente
 while ( difficoltà != "facile" && difficoltà != "normale" && difficoltà != "difficile" ) {
@@ -76,37 +76,55 @@ if ( difficoltà == "facile" ) {
 }
 
 
-// 2. Tramite una funzione javascript disegnare in pagina la griglia con massimo 10 celle per riga
-
-// a. Richiamo funzione
-var campo = CreateCell(NumCelle);
-console.log(campo);
-console.log(NumCelle);
-
-
-// Generare le bombe di prova
+// 2. Generare le bombe di prova
 var bombe = [4, 7, 20];
+var Bombe = [];
+
+// while ( Bombe.length < 16 ) {
+//     // 1.generare un numero random salvandolo in una variabile
+//     // 2.Se il numero è già presente all'interno dell'array Bombe genero un numero diverso (inArray)
+//     // 3.pushare la variabile all'interno dell'array
+// }
+console.log (bombe);
 
 
-// 3. Al click su una cella dovrà essere mostrato con un alert il numero della cella e il suo background diventerà rosso
-var CELL = document.getElementById("Campo");
-CELL.addEventListener ("click",
-    function(event) {
-        // event.target.classList.toggle("changeColor"); // toggle => aggiunge e toglie la classe "changeColor"
+// 3. Tramite una funzione javascript disegnare in pagina la griglia con massimo 10 celle per riga
+CreateCell(NumCelle);
+
+
+// 4. Al click su una cella, il colore cambia, si deve verificare se il numero della cella corrisponde ad un numero bomba
+
+var numeriCliccati = [];
+var punteggio = numeriCliccati;
+
+document.getElementById("Campo").addEventListener ("click",
+    function (event) {
+        // event.target.classList.toggle("changeColor"); // toggle => aggiunge e toglie la classe "changeColor" ad ogni click
         event.target.classList.add("changeColor");
-        // alert(event.target.innerHTML);
-        var Num = event.target.innerHTML;
 
-        // richiamo la funzione per verificare la presenza del target nell'array delle bombe
-        var risultato = inArray( bombe, Num );
+        // salvo il numero casella in una variabile
+        var Num = (event.target.innerHTML);
 
-        // stampo il risultato della verifica
-        if ( risultato == false ) {
-            alert("SEI SALVO!");
-        } else {
-            alert("HAI PERSO!");
-        }
+        // Se clicchi su una bomba
+        if ( inArray( bombe, Num ) == true ) {
+            event.target.classList.add("redColor");
+            alert(`OPS.. LA CASELLA NUMERO ${Num} É UNA BOMBA! HAI CLICCATO IN TOTALE ${punteggio.length} CASELLE SU ${NumCelle}`);
+            location.reload();
+
+        // se invece hai cliccato già su un numero
+        } else if ( inArray( numeriCliccati, Num ) == true ) {
+            alert(`HAI GIÀ CLICCATO SU QUESTO NUMERO..`);
         
+        // altrimenti pusha il numero nell'array "numeriCliccati"    
+        } else {
+            numeriCliccati.push(Num);
+        }
+
+        // Se l'utente riesce a cliccare su tutte le caselle evitando le bombe vince
+        if ( numeriCliccati.length == (NumCelle - 16) ) {
+            alert(`HAI VINTO! SEI RIUSCITO A CLICCARE SU TUTTE LE CASELLE EVITANDO LE BOMBE!`);
+            location.reload();
+        }
+
     }
 );
-
