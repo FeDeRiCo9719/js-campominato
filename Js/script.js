@@ -51,6 +51,13 @@ function inArray( array, element ) {
 
 }
 
+// C. generare un numero random
+function NumRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
@@ -76,16 +83,23 @@ if ( difficoltà == "facile" ) {
 }
 
 
-// 2. Generare le bombe di prova
-var bombe = [4, 7, 20];
-var Bombe = [];
+// 2. Generare le bombe 
 
-// while ( Bombe.length < 16 ) {
-//     // 1.generare un numero random salvandolo in una variabile
-//     // 2.Se il numero è già presente all'interno dell'array Bombe genero un numero diverso (inArray)
-//     // 3.pushare la variabile all'interno dell'array
-// }
-console.log (bombe);
+var bombe = [];
+
+while ( bombe.length < 10 ) {
+    // 1.generare un numero random salvandolo in una variabile
+    var randomNum = (NumRandom(1, NumCelle));
+
+    // 2.Se il numero è già presente all'interno dell'array Bombe genero un numero diverso (inArray)
+    if ( (inArray(bombe,randomNum)) == true ) {
+        var randomNum = (NumRandom(1, NumCelle));
+    // 3.pushare la variabile all'interno dell'array
+    } else {
+        bombe.push(randomNum);
+    }
+}
+console.log(bombe);
 
 
 // 3. Tramite una funzione javascript disegnare in pagina la griglia con massimo 10 celle per riga
